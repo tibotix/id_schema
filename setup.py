@@ -20,5 +20,5 @@ setup(
     packages=["id_schema"],
     install_requires=[],
     extras_require={"test": ["pytest"]},
-    python_requires=">=3.7, <4",
+    python_requires=">=3.8, <4",
 )
