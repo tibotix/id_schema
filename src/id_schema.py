@@ -31,12 +31,18 @@ class IDSchema():
         return id_
 
     @classmethod
-    def validate(cls, id_ : str, start_component_index: int = 0) -> bool:
+    def validate(cls, id_ : str) -> bool:
+        if len(cls.Components) == 1:
+            return cls.Components[0].validate(id_)
+        return cls._validate(id_)
+
+    @classmethod
+    def _validate(cls, id_ : str, start_component_index: int = 0) -> bool:
         if start_component_index == len(cls.Components):
             return id_ == ""
         sub_ids = cls.Components[start_component_index].reduce_all_matching(id_)
         for sub_id in sub_ids:
-            if cls.validate(sub_id, start_component_index+1):
+            if cls._validate(sub_id, start_component_index+1):
                 return True
         return False
 
