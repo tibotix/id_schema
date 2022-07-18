@@ -72,4 +72,4 @@ class SerialNumberSchema(IDSchema):
 - `generate_one()` : generate one string from the Schema
 - `generate_n(n)`: generate n strings from the same Schema
 - `generate_n_unique(n, max_retry=20)` : generate n unique strings from the same Schema. Fail after `max_retry` attempts.
-- `validate(string)`: validate if a given string matches the Schema
+- `validate(string)`: validate if a given string matches the Schema (note that `alphabet_weights` are not validated)
