@@ -59,12 +59,12 @@ import string
 
 class SerialNumberSchema(IDSchema):
 	Components = (
-    	RandomGroup(alphabet=string.ascii_letter, length=5),
-        ExactLiteral("-"),
-    	RandomGroup(alphabet=string.ascii_letter, length=(5,10)),
-        ExactLiteral("-"),
-        RandomGroup(alphabet=string.ascii_letter, length=5),
-    )
+		RandomGroup(alphabet=string.ascii_letter, length=5),
+		ExactLiteral("-"),
+		RandomGroup(alphabet=string.ascii_letter, length=(5,10)),
+		ExactLiteral("-"),
+		RandomGroup(alphabet=string.ascii_letter, length=5),
+	)
 ```
 
 `IDSchema` exposes various functions:
