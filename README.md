@@ -48,14 +48,40 @@ ExactLiteral("abcd") # will always generate 'abcd'
 ```
 
 
+### OneOf
+
+The `OneOf` component allows to generate exactly one other component based on a component subset. Specifying a pure string automatically transforms it to an `ExactLiteral` for you.
+
+```python
+OneOf(components=(
+	"gmail.com",
+	"yahoo.com",
+	"hotmail.com"
+))
+OneOf(components=(
+	RandomGroup(alphabet="abcd", length=LengthRange(1,3)),
+	RandomGroup(alphabet="efgh", length=LengthRange(1,3)),
+))
+```
 
 ## ID Schema
 
 To actually use these components, you have to create an `IDSchema` subclass. Just define your components under the `Components` class attribute and you are done.
 
 ```python
-from id_schema import IDSchema, RandomGroup, ExactLiteral
+from id_schema import OneOf, IDSchema, RandomGroup, ExactLiteral
 import string
+
+class EmailSchema(IDSchema):
+	Components = (
+		RandomGroup(alphabet=string.ascii_letter, length=(1,20)),
+		ExactLiteral("@"),
+		OneOf(components=(
+			"gmail.com",
+			"yahoo.com",
+			"hotmail.com"
+		))
+	)
 
 class SerialNumberSchema(IDSchema):
 	Components = (

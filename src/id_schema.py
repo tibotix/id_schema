@@ -12,7 +12,7 @@ class IDSchema():
         
     @classmethod
     def generate_n_unique(cls, n: int, max_retry: int = 20) -> List[str]:
-        ids = list()
+        ids: List[str] = list()
         while len(ids) < n:
             new_id = cls.generate_one()
             if new_id in ids:
