@@ -3,6 +3,16 @@ import pytest
 from src import RandomGroup, LengthRange
 
 
+def test_random_group_invalid_alphabet_type():
+    with pytest.raises(TypeError):
+        RandomGroup(alphabet=["abcd", "efgh"])
+    with pytest.raises(TypeError):
+        RandomGroup(alphabet=123)
+
+def test_random_group_invalid_alphabet_value():
+    with pytest.raises(ValueError):
+        RandomGroup(alphabet="aab")
+
 
 def test_random_group_single_alphabet_generate():
     assert RandomGroup(alphabet="a", length=1).generate() == "a"
@@ -10,8 +20,8 @@ def test_random_group_single_alphabet_generate():
 
 
 def test_random_group_default_length():
-    assert RandomGroup(alphabet="aa").generate() == "aa"
-    assert RandomGroup(alphabet="aaaa").generate() == "aaaa"
+    assert len(RandomGroup(alphabet="ab").generate()) == 2
+    assert len(RandomGroup(alphabet="abcd").generate()) == 4
 
 def test_random_group_generate_single_length():
     group = RandomGroup(alphabet="abcd", length=1).generate()
