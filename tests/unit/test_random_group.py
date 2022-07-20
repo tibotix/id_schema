@@ -1,6 +1,7 @@
 import pytest
 
 from src import RandomGroup, LengthRange
+from src.components.random_group import LengthSequence
 
 
 def test_random_group_invalid_alphabet_type():
@@ -34,11 +35,13 @@ def test_random_group_generate_multi_length():
     for char in group:
         assert char in "abcd"
 
-def test_random_group_generate_length_range():
-    group = RandomGroup(alphabet="abcd", length=(1,2)).generate()
-    assert len(group) in (1,2)
-    group = RandomGroup(alphabet="abcd", length=LengthRange(1, 2)).generate()
-    assert len(group) in (1,2)
+def test_random_group_generate_length():
+    group = RandomGroup(alphabet="abcd", length=LengthRange(1,3)).generate()
+    assert len(group) in (1,2,3)
+    group = RandomGroup(alphabet="abcd", length=LengthSequence(1, 3)).generate()
+    assert len(group) in (1,3)
+    group = RandomGroup(alphabet="abcd", length=1).generate()
+    assert len(group) == 1
 
 
 def test_random_group_weights_generate():
@@ -67,12 +70,18 @@ def test_random_group_validate_unique():
     assert RandomGroup(alphabet="abcd", unique=True).validate("aaaa") is False
 
 
-def test_random_group_validate_length_range():
-    assert RandomGroup(alphabet="abcd", length=(1,3)).validate("a") is True
-    assert RandomGroup(alphabet="abcd", length=(1,3)).validate("aa") is True
-    assert RandomGroup(alphabet="abcd", length=(1,3)).validate("abc") is True
-    assert RandomGroup(alphabet="abcd", length=(1,3)).validate("abcd") is False
-    assert RandomGroup(alphabet="abcd", length=(1,3)).validate("") is False
+def test_random_group_validate_length():
+    assert RandomGroup(alphabet="abcd", length=LengthRange(1,3)).validate("a") is True
+    assert RandomGroup(alphabet="abcd", length=LengthRange(1,3)).validate("aa") is True
+    assert RandomGroup(alphabet="abcd", length=LengthRange(1,3)).validate("abc") is True
+    assert RandomGroup(alphabet="abcd", length=LengthRange(1,3)).validate("abcd") is False
+    assert RandomGroup(alphabet="abcd", length=LengthRange(1,3)).validate("") is False
+
+    assert RandomGroup(alphabet="abcd", length=LengthSequence(1,3)).validate("a") is True
+    assert RandomGroup(alphabet="abcd", length=LengthSequence(1,3)).validate("aa") is False
+    assert RandomGroup(alphabet="abcd", length=LengthSequence(1,3)).validate("abc") is True
+    assert RandomGroup(alphabet="abcd", length=LengthSequence(1,3)).validate("abcd") is False
+    assert RandomGroup(alphabet="abcd", length=LengthSequence(1,3)).validate("") is False
 
 
 def test_random_group_reduce_all_matching_non_unique():

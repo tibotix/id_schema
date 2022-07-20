@@ -16,7 +16,8 @@ Currently there are three components.
 ### RandomGroup
 
 The `RandomGroup` component allows to generate a random sequence of a predefined alphabet
-with a predefined length range. A length range can have a minimum length and a maximum length. Valid length ranges are for example:
+with a predefined length. A length can either be a `LengthRange` or `LengthSequence`.
+A `LengthRange` has a minimum length and a maximum length. Valid `LengthRange`s are for example:
 
 ```python
 LengthRange(1) # always maps to 1
@@ -26,16 +27,25 @@ LengthRange(5,10) # interval [5,10]
 LengthRange(10, max_length=1) # INVALID RANGE! , because min > max
 ```
 
+A `LengthSequence` has a sequence of lengths that are allowed. Valid `LengthSequence`s are for example:
+
+```python
+LengthSequence(1) # always maps to 1
+LengthSequence(1,2,3) # maps to lengths (1,2,3)
+LengthSequence(1, 10, 20) # maps to lengths (1,10,20)
+LengthSequence((1,10,20)) # also maps to lengths (1,10,20)
+```
+
 If you only want the resulting random string sequence to contain only unique elements,
 you can use the keyword argument `unique=True`. The default is `unique=False`.
 
 Here are some examples on how to use the `RandomGroup` component.
 ```python
 RandomGroup(alphabet="abcd", length=1)
-RandomGroup(alphabet="abcd", length=(1,3))
-RandomGroup(alphabet="abcd", length=LengthRange(1,3))
-RandomGroup(alphabet="abcd", length=(1,3), unique=True)
-RandomGroup(alphabet="ab", length=(1,3), weights=[0.75,0.25]) # 'a' will occur 3/4 as much as 'b'
+RandomGroup(alphabet="abcd", length=LengthSequence(1,3))
+RandomGroup(alphabet="abcd", length=LengthRange(1,5))
+RandomGroup(alphabet="abcd", length=LengthSequence(1,3,5), unique=True)
+RandomGroup(alphabet="ab", length=LengthRange(1,3), weights=[0.75,0.25]) # 'a' will occur 3/4 as much as 'b'
 ```
 
 ### ExactLiteral
@@ -61,7 +71,7 @@ OneOf(components=(
 OneOf(components=(
 	RandomGroup(alphabet="abcd", length=LengthRange(1,3)),
 	RandomGroup(alphabet="efgh", length=LengthRange(1,3)),
-), weights=(0.75, 0.25))
+), weights=(0.75, 0.25)) # first RandomGroup will occur 3/4 as much as second RandomGroup
 ```
 
 ## ID Schema
@@ -74,7 +84,7 @@ import string
 
 class EmailSchema(IDSchema):
 	Components = (
-		RandomGroup(alphabet=string.ascii_letter, length=(1,20)),
+		RandomGroup(alphabet=string.ascii_letter, length=LengthRange(1,20)),
 		ExactLiteral("@"),
 		OneOf(components=(
 			"gmail.com",
@@ -87,7 +97,7 @@ class SerialNumberSchema(IDSchema):
 	Components = (
 		RandomGroup(alphabet=string.ascii_letter, length=5),
 		ExactLiteral("-"),
-		RandomGroup(alphabet=string.ascii_letter, length=(5,10)),
+		RandomGroup(alphabet=string.ascii_letter, length=LengthRange(5,10)),
 		ExactLiteral("-"),
 		RandomGroup(alphabet=string.ascii_letter, length=5),
 	)

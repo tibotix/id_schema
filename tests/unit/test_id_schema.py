@@ -2,6 +2,7 @@ import pytest
 import string
 
 from src import OneOf, RandomGroup, IDSchema, ExactLiteral
+from src.components.random_group import LengthRange
 
 class EmptySchema(IDSchema):
     Components = []
@@ -22,10 +23,10 @@ class SimpleSchema(IDSchema):
 class ComplexSchema(IDSchema):
     Components = (
         OneOf(components=(
-            RandomGroup(alphabet=string.punctuation+string.ascii_letters, length=(0,30)),
-            RandomGroup(alphabet=string.punctuation+string.ascii_letters, length=(0,30)),
+            RandomGroup(alphabet=string.punctuation+string.ascii_letters, length=LengthRange(0,30)),
+            RandomGroup(alphabet=string.punctuation+string.ascii_letters, length=LengthRange(0,30)),
         )),
-        RandomGroup(alphabet=string.punctuation+string.ascii_letters, length=(0,30)),
+        RandomGroup(alphabet=string.punctuation+string.ascii_letters, length=LengthRange(0,30)),
         ExactLiteral("-"),
         RandomGroup(alphabet="abcd", length=4),
         ExactLiteral("abcd"),
@@ -37,7 +38,7 @@ class ComplexSchema(IDSchema):
             "c",
         )),
         RandomGroup(alphabet="abcd", length=2),
-        RandomGroup(alphabet=string.punctuation+string.ascii_letters, length=(0,30)),
+        RandomGroup(alphabet=string.punctuation+string.ascii_letters, length=LengthRange(0,30)),
     )
 
 
