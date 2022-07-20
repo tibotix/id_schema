@@ -8,7 +8,7 @@ or just install it directly from pypi with `pip3 install id-schema`.
 ## What is it?
 
 *ID Schema* allows you to define your custom Schema, how an identifier string should look like. Each identifier string consists of one or more *components*, which are then concatenated into one large identifier string.
-Currently there are two components.
+Currently there are three components.
 
 ## Components
 
