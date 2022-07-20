@@ -16,7 +16,7 @@ class OneOf(BaseComponent):
                 parsed_components.append(ExactLiteral(component))
                 continue
             if not isinstance(component, BaseComponent):
-                raise TypeError(f"component has to of type 'BaseComponent' or 'str', not '{component.__class__.__name__}'")
+                raise TypeError(f"component has to be of type 'BaseComponent' or 'str', not '{component.__class__.__name__}'")
             parsed_components.append(component)
         return parsed_components
 
