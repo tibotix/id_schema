@@ -35,7 +35,7 @@ RandomGroup(alphabet="abcd", length=1)
 RandomGroup(alphabet="abcd", length=(1,3))
 RandomGroup(alphabet="abcd", length=LengthRange(1,3))
 RandomGroup(alphabet="abcd", length=(1,3), unique=True)
-RandomGroup(alphabet="ab", length=(1,3), alphabet_weights=[0.75,0.25]) # 'a' will occur 3/4 as much as 'b'
+RandomGroup(alphabet="ab", length=(1,3), weights=[0.75,0.25]) # 'a' will occur 3/4 as much as 'b'
 ```
 
 ### ExactLiteral
@@ -61,7 +61,7 @@ OneOf(components=(
 OneOf(components=(
 	RandomGroup(alphabet="abcd", length=LengthRange(1,3)),
 	RandomGroup(alphabet="efgh", length=LengthRange(1,3)),
-))
+), weights=(0.75, 0.25))
 ```
 
 ## ID Schema
@@ -98,4 +98,4 @@ class SerialNumberSchema(IDSchema):
 - `generate_one()` : generate one string from the Schema
 - `generate_n(n)`: generate n strings from the same Schema
 - `generate_n_unique(n, max_retry=20)` : generate n unique strings from the same Schema. Fail after `max_retry` attempts.
-- `validate(string)`: validate if a given string matches the Schema (note that `alphabet_weights` are not validated)
+- `validate(string)`: validate if a given string matches the Schema (note that `weights` are not validated)

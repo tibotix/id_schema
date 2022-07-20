@@ -43,7 +43,7 @@ def test_random_group_generate_length_range():
 
 def test_random_group_weights_generate():
     for _ in range(10):
-        group = RandomGroup(alphabet="abcd", length=2, alphabet_weights=[1, 0, 0 ,0]).generate()
+        group = RandomGroup(alphabet="abcd", length=2, weights=[1, 0, 0 ,0]).generate()
         assert group == "aa"
 
 def test_random_group_unique_generate():

@@ -24,14 +24,14 @@ class LengthRange:
 
 
 class RandomGroup(BaseComponent):
-    def __init__(self, alphabet: Sequence[str], length: Union[LengthRange,Sequence[int],int,None] = None, alphabet_weights: Optional[Sequence[float]] = None, unique: bool=False) -> None:
+    def __init__(self, alphabet: Sequence[str], length: Union[LengthRange,Sequence[int],int,None] = None, weights: Optional[Sequence[float]] = None, unique: bool=False) -> None:
         if not isinstance(alphabet, str):
             raise TypeError(f"alphabet has to be of type 'str', not '{str(alphabet.__class__.__name__)}'.")
         if len(set(alphabet)) != len(alphabet):
             raise ValueError(f"alphabet has to be unique.")
         self.alphabet = alphabet
         self.length_range = self._create_length_range(length)
-        self.alphabet_weights = alphabet_weights
+        self.weights = weights
         self.unique = unique
 
 
@@ -51,7 +51,7 @@ class RandomGroup(BaseComponent):
     def generate(self) -> str:
         if self.unique:
             return "".join(random.sample(self.alphabet, self.length_range.one_in_range()))
-        return "".join(random.choices(self.alphabet, weights=self.alphabet_weights, k=self.length_range.one_in_range()))
+        return "".join(random.choices(self.alphabet, weights=self.weights, k=self.length_range.one_in_range()))
 
 
     def validate(self, group: Sequence[str]) -> bool:
