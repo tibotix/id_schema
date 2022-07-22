@@ -5,11 +5,11 @@ import random
 
 
 class OneOf(BaseComponent):
-    def __init__(self, components: Sequence[BaseComponent|str], weights: Optional[Sequence[float]] = None) -> None:        
+    def __init__(self, components: Sequence[Union[BaseComponent,str]], weights: Optional[Sequence[float]] = None) -> None:        
         self.components = self._parse_components(components)
         self.weights = weights
 
-    def _parse_components(self, components: Sequence[BaseComponent|str]) -> Sequence[BaseComponent]:
+    def _parse_components(self, components: Sequence[Union[BaseComponent,str]]) -> Sequence[BaseComponent]:
         parsed_components = list()
         for component in components:
             if isinstance(component, str):
