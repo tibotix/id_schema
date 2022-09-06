@@ -36,7 +36,7 @@ LengthSequence(1, 10, 20) # maps to lengths (1,10,20)
 LengthSequence((1,10,20)) # also maps to lengths (1,10,20)
 ```
 
-If you only want the resulting random string sequence to contain only unique elements,
+If you want the resulting random string sequence to contain only unique elements,
 you can use the keyword argument `unique=True`. The default is `unique=False`.
 
 Here are some examples on how to use the `RandomGroup` component.
