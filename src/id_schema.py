@@ -32,7 +32,7 @@ class IDSchema():
         return id_
 
     @classmethod
-    def validate(cls, id_ : str, max_reductions: int = 10000, iterative=True) -> bool:
+    def validate(cls, id_ : str, max_reductions: int = 5000, iterative=True) -> bool:
         if len(cls.Components) == 1:
             return cls.Components[0].validate(id_)
         if not iterative and (rec_limit := sys.getrecursionlimit()) <= len(cls.Components):
@@ -42,7 +42,7 @@ class IDSchema():
         return cls._validate_recursive(id_, max_reductions=max_reductions)[0]
 
     @classmethod
-    def _validate_recursive(cls, id_ : str, cur_idx: int = 0, max_reductions: int = 10000) -> bool:
+    def _validate_recursive(cls, id_ : str, cur_idx: int = 0, max_reductions: int = 5000) -> bool:
         if max_reductions == 0:
             raise RuntimeError("Max Reductions reached! (DoS protection)")
         if cur_idx == len(cls.Components):
@@ -55,7 +55,7 @@ class IDSchema():
         return False, max_reductions
 
     @classmethod
-    def _validate_iterative(cls, id_ : str, cur_idx: int = 0, max_reductions: int = 10000) -> bool:
+    def _validate_iterative(cls, id_ : str, cur_idx: int = 0, max_reductions: int = 5000) -> bool:
         stack = list((iter((id_, )),))
         sub_ids = stack[cur_idx]
         while True:
