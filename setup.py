@@ -19,6 +19,6 @@ setup(
     package_dir={"id_schema": "src"},
     packages=["id_schema", "id_schema.components"],
     install_requires=[],
-    extras_require={"test": ["pytest"]},
+    extras_require={"test": ["pytest", "pytest-benchmark"]},
     python_requires=">=3.8, <4",
 )
