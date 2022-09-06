@@ -19,7 +19,7 @@ def test_length_range_iter():
 def test_length_range_one_in_range():
     assert LengthRange(1).one_in_range() == 1
     assert LengthRange(1, max_length=1).one_in_range() == 1
-    assert LengthRange(1, 10).one_in_range() in list(range(1, 10))
+    assert LengthRange(1, 10).one_in_range() in list(range(1, 11))
 
 
 def test_length_range_invalid_range():
