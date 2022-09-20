@@ -20,7 +20,7 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
       - name: Install test dependencies
-        run: pip install --upgrade tox virtualenv setuptools pip
+        run: python -m pip install --upgrade tox virtualenv setuptools pip
       - name: Run tox
         # Run tox using the version of Python in `PATH`
         run: tox -e py
