@@ -2,3 +2,7 @@ __pycache__/
 .vscode/
 dist/
 *.egg-info/
+.coverage
+.tox/
+.benchmarks/
+*.pyc
