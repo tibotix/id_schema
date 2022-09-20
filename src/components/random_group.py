@@ -9,7 +9,7 @@ class LengthRange:
         self.min = min_length
         self.max = max_length if max_length is not None else min_length
         self._validate_range()
-        
+
     def _validate_range(self) -> None:
         if self.min > self.max:
             raise ValueError("Constraint failed: min <= max.")
@@ -21,12 +21,13 @@ class LengthRange:
         return self.min <= number <= self.max
 
     def __iter__(self):
-        return iter(range(self.min, self.max+1))
+        return iter(range(self.min, self.max + 1))
+
 
 class LengthSequence:
     def __init__(self, *lengths) -> None:
         self.lengths = self._parse_lengths(lengths)
-    
+
     def _parse_lengths(self, lengths):
         if len(lengths) == 0:
             raise ValueError("you have to specify at least one length!")
@@ -47,9 +48,17 @@ class LengthSequence:
 
 
 class RandomGroup(BaseComponent):
-    def __init__(self, alphabet: Sequence[str], length: Union[LengthRange,LengthSequence,int,None] = None, weights: Optional[Sequence[float]] = None, unique: bool=False) -> None:
+    def __init__(
+        self,
+        alphabet: Sequence[str],
+        length: Union[LengthRange, LengthSequence, int, None] = None,
+        weights: Optional[Sequence[float]] = None,
+        unique: bool = False,
+    ) -> None:
         if not isinstance(alphabet, str):
-            raise TypeError(f"alphabet has to be of type 'str', not '{str(alphabet.__class__.__name__)}'.")
+            raise TypeError(
+                f"alphabet has to be of type 'str', not '{str(alphabet.__class__.__name__)}'."
+            )
         if len(set(alphabet)) != len(alphabet):
             raise ValueError(f"alphabet has to be unique.")
         self.alphabet = alphabet
@@ -57,21 +66,27 @@ class RandomGroup(BaseComponent):
         self.weights = weights
         self.unique = unique
 
-
-    def _parse_length(self, length: Union[LengthRange,LengthSequence,int,None]) -> Union[LengthRange, LengthSequence]:
+    def _parse_length(
+        self, length: Union[LengthRange, LengthSequence, int, None]
+    ) -> Union[LengthRange, LengthSequence]:
         if length is None:
             return LengthSequence(len(self.alphabet))
         if isinstance(length, int):
             return LengthSequence(length)
         if isinstance(length, (LengthRange, LengthSequence)):
             return length
-        raise TypeError("type of 'length' has to be one of ('LengthRange', 'LengthSequence', 'int', 'NoneType').")
+        raise TypeError(
+            "type of 'length' has to be one of ('LengthRange', 'LengthSequence', 'int', 'NoneType')."
+        )
 
     def generate(self) -> str:
         if self.unique:
             return "".join(random.sample(self.alphabet, self.length.one_in_range()))
-        return "".join(random.choices(self.alphabet, weights=self.weights, k=self.length.one_in_range()))
-
+        return "".join(
+            random.choices(
+                self.alphabet, weights=self.weights, k=self.length.one_in_range()
+            )
+        )
 
     def validate(self, group: Sequence[str]) -> bool:
         if len(group) not in self.length:
