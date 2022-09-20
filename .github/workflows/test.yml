@@ -1,0 +1,26 @@
+name: id_schema tests
+
+on:
+  pull_requests:
+  push:
+    branches: [master, test-me-*]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        python: ["3.8", "3.9", "3.10"]
+        os: [windows-latest, ubuntu-latest]
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install test dependencies
+        run: pip install --upgrade tox virtualenv setuptools pip
+      - name: Run tox
+        # Run tox using the version of Python in `PATH`
+        run: tox -e py
