@@ -1,7 +1,7 @@
 name: id_schema tests
 
 on:
-  pull_requests:
+  pull_request:
   push:
     branches: [master, test-me-*]
 
